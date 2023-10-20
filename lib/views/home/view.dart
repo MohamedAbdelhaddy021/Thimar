@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
   List<String> labels = [
     "الرئيسية",
     "طلباتي",
-    "الإشعارات",
+    "Gالإشعارات",
     "المفضلة",
     "حسابي",
   ];

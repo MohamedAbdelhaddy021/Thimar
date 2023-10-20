@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/design/app_button.dart';
@@ -225,17 +226,17 @@ class _ProductItem extends StatelessWidget {
               child: Stack(
                 alignment: AlignmentDirectional.topEnd,
                 children: [
-                  Image.network(
-                    model.mainImage,
+                  CachedNetworkImage(
+                    imageUrl: model.mainImage,
                     width: double.infinity,
-                    height: 117,
+                    height: 117.h,
                     fit: BoxFit.cover,
                   ),
                   Container(
                     decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
-                        borderRadius: const BorderRadiusDirectional.only(
-                            bottomStart: Radius.circular(11))),
+                        borderRadius: BorderRadiusDirectional.only(
+                            bottomStart: Radius.circular(11.r))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 1),
@@ -253,21 +254,24 @@ class _ProductItem extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 8.h,
+          ),
           Text(
             model.title,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
             ),
           ),
-          const SizedBox(
-            height: 4,
+          SizedBox(
+            height: 4.h,
           ),
           Text(
             "السعر / 1كجم",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w300,
               color: Theme.of(context).primaryColor,
             ),
@@ -276,7 +280,7 @@ class _ProductItem extends StatelessWidget {
               text: "${model.priceBeforeDiscount} ر.س",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: Theme.of(context).primaryColor,
               ),
               children: [
@@ -285,7 +289,7 @@ class _ProductItem extends StatelessWidget {
                   text: "${model.price} ر.س",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     decoration: TextDecoration.lineThrough,
                     color: Theme.of(context).primaryColor,
                   ),
@@ -398,10 +402,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 20.0),
               child: GestureDetector(
-                onTap: () async {
-                  await CacheHelper.clear();
-                  navigateTo(const LoginView());
-                },
+                onTap: () async {},
                 child: Badge(
                   alignment: AlignmentDirectional.topStart,
                   offset: const Offset(4, -5.5),

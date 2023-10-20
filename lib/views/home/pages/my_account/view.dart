@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/logic/cache_helper.dart';
+import '../../../../core/logic/helper_methods.dart';
+import '../../../auth/login/view.dart';
+
 class MyAccountPage extends StatelessWidget {
   MyAccountPage({super.key});
 
@@ -186,37 +190,43 @@ class MyAccountPage extends StatelessWidget {
                   itemCount: 4,
                 ),
               ),
-              Container(
-                height: 50.h,
-                padding: EdgeInsets.symmetric(horizontal: 13.w),
-                margin: EdgeInsetsDirectional.symmetric(
-                    horizontal: 16.h, vertical: 20.h),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 11.r,
-                          offset: const Offset(0, 1),
-                          color: Colors.black.withOpacity(.05),
-                          blurStyle: BlurStyle.outer)
-                    ]),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "تسجيل الخروج",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: ()async{
+                  await CacheHelper.clear();
+                  navigateTo(const LoginView());
+                },
+                child: Container(
+                  height: 50.h,
+                  padding: EdgeInsets.symmetric(horizontal: 13.w),
+                  margin: EdgeInsetsDirectional.symmetric(
+                      horizontal: 16.h, vertical: 20.h),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(17),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 11.r,
+                            offset: const Offset(0, 1),
+                            color: Colors.black.withOpacity(.05),
+                            blurStyle: BlurStyle.outer)
+                      ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "تسجيل الخروج",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/svg/turn_off.svg",
-                      // color: Theme.of(context).primaryColor,
-                      theme: SvgTheme(fontSize: 20,currentColor: Colors.red),
-                    )
-                  ],
+                      SvgPicture.asset(
+                        "assets/icons/svg/turn_off.svg",
+                        // color: Theme.of(context).primaryColor,
+                        theme: SvgTheme(fontSize: 20,currentColor: Colors.red),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
