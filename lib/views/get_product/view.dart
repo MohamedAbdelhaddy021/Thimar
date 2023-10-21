@@ -286,6 +286,7 @@ class ProductDetailsView extends StatelessWidget {
                             SizedBox(
                               height: 172.h,
                               child: ListView.separated(
+                                padding: EdgeInsetsDirectional.only(bottom: 20.h),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) =>
                                       const _SimilarityItem(),
@@ -443,7 +444,7 @@ class _SimilarityItem extends StatelessWidget {
     return Container(
       height: 172.h,
       width: 130.w,
-      padding: EdgeInsetsDirectional.only(start: 7.0),
+      padding: EdgeInsetsDirectional.only(start: 7.0.w,),
       decoration: BoxDecoration(
           boxShadow: const [
             BoxShadow(color: Colors.white, offset: Offset(2, 11)),
@@ -519,8 +520,9 @@ class _SimilarityItem extends StatelessWidget {
             ],
           ),
           Container(
-            width: 45.w,
-            height: 16.h,
+            width: 55.w,
+            height: 19.h,
+            padding: EdgeInsetsDirectional.only(top: 3.h),
             decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
                 borderRadius: const BorderRadiusDirectional.only(
@@ -529,10 +531,11 @@ class _SimilarityItem extends StatelessWidget {
                 )),
             child: Center(
                 child: Text(
-              "% 3-",
+              "-3 %",
+              textDirection: TextDirection.ltr,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold),
             )),
           ),

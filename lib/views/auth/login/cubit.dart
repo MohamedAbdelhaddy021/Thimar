@@ -14,8 +14,8 @@ class LoginCubit extends Cubit<LoginStates> {
   final formKey = GlobalKey<FormState>();
   bool isHidden = true;
 
-  final phoneController = TextEditingController(text: "01288128523");
-  final passwordController = TextEditingController(text: "123456789");
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void login() async {
     if (formKey.currentState!.validate()) {

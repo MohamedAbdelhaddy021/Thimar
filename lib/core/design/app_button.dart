@@ -42,7 +42,7 @@ class _AppButtonState extends State<AppButton> {
             style: TextStyle(
               color: widget.textColor,
               fontWeight: FontWeight.bold,
-              fontSize: 15,
+              fontSize: 14,
             ),
           )),
     );

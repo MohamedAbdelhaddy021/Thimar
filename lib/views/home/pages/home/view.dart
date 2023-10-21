@@ -233,8 +233,8 @@ class _ProductItem extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   Container(
-                    width: 55.w,
-                    height: 20.h,
+                    width: 54.w,
+                    height: 19.h,
                     padding: EdgeInsets.only(top: 3.0.h),
                     decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
@@ -246,8 +246,9 @@ class _ProductItem extends StatelessWidget {
                         textDirection: TextDirection.ltr,
                         style:  TextStyle(
                             color: Colors.white,
+                            fontFamily: "l",
                             fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
+                            fontSize: 12.sp),
                       ),
                     ),
                   )
@@ -306,14 +307,15 @@ class _ProductItem extends StatelessWidget {
                     ])),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(
-                      start: 24.0, end: 24, top: 19, bottom: 10),
-                  child: SizedBox(
-                      height: 40,
-                      child: AppButton(
-                        title: "أضف للسلة",
-                        onPress: () {},
-                        color: const Color(0xff61B80C),
-                      )),
+                      start: 24.0, end: 24, top: 10, bottom: 10),
+                  child: AppButton(
+                    title: "أضف للسلة",
+                    width: 115.w,
+                    height: 35.h,
+                    radius: 9.r,
+                    onPress: () {},
+                    color: const Color(0xff61B80C),
+                  ),
                 ),
               ],
             ),

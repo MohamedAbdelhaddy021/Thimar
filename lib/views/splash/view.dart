@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:thimar/views/home/view.dart';
 
 import '../../core/logic/cache_helper.dart';
 import '../auth/login/view.dart';
@@ -22,7 +23,7 @@ class _SplashViewState extends State<SplashView> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                CacheHelper.isAuth() ? const HomePage() : const LoginView(),
+                CacheHelper.isAuth() ? const HomeView() : const LoginView(),
           ));
     });
   }

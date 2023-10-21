@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar/views/auth/register/cubit.dart';
 import 'package:thimar/views/home/view.dart';
+import 'package:thimar/views/splash/view.dart';
 import 'core/logic/cache_helper.dart';
 import 'core/logic/helper_methods.dart';
 import 'features/category/cubit/cubit.dart';
@@ -91,7 +92,7 @@ class ThimarApp extends StatelessWidget {
             ),
             primarySwatch: getMyMaterialColor(),
           ),
-          home:  const HomeView(),
+          home:  const SplashView(),
         ),
       ),
     );
