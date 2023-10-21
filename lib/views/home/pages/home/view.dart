@@ -222,31 +222,32 @@ class _ProductItem extends StatelessWidget {
         children: [
           Center(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(11),
+              borderRadius: BorderRadius.circular(11.r),
               child: Stack(
                 alignment: AlignmentDirectional.topEnd,
                 children: [
                   CachedNetworkImage(
                     imageUrl: model.mainImage,
-                    width: double.infinity,
+                    width: 145.w,
                     height: 117.h,
                     fit: BoxFit.cover,
                   ),
                   Container(
+                    width: 55.w,
+                    height: 20.h,
+                    padding: EdgeInsets.only(top: 3.0.h),
                     decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadiusDirectional.only(
                             bottomStart: Radius.circular(11.r))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 1),
+                    child: Center(
                       child: Text(
                         "${model.discount} %",
                         textDirection: TextDirection.ltr,
-                        style: const TextStyle(
+                        style:  TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 14),
+                            fontSize: 14.sp),
                       ),
                     ),
                   )
@@ -257,55 +258,66 @@ class _ProductItem extends StatelessWidget {
           SizedBox(
             height: 8.h,
           ),
-          Text(
-            model.title,
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          SizedBox(
-            height: 4.h,
-          ),
-          Text(
-            "السعر / 1كجم",
-            style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w300,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          Text.rich(TextSpan(
-              text: "${model.priceBeforeDiscount} ر.س",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16.sp,
-                color: Theme.of(context).primaryColor,
-              ),
+          Padding(
+            padding: EdgeInsetsDirectional.only(start: 9.0.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TextSpan(text: "\t"),
-                TextSpan(
-                  text: "${model.price} ر.س",
+                Text(
+                  model.title,
                   style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.sp,
-                    decoration: TextDecoration.lineThrough,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
                     color: Theme.of(context).primaryColor,
                   ),
-                )
-              ])),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(
-                start: 24.0, end: 24, top: 19, bottom: 10),
-            child: SizedBox(
-                height: 40,
-                child: AppButton(
-                  title: "أضف للسلة",
-                  onPress: () {},
-                  color: const Color(0xff61B80C),
-                )),
-          ),
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                Padding(
+                  padding:  EdgeInsets.symmetric(vertical: 4.0.h),
+                  child: Text(
+                    "السعر / 1كجم",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w300,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                Text.rich(TextSpan(
+                    text: "${model.price} ر.س",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    children: [
+                      const TextSpan(text: "\t"),
+                      TextSpan(
+                        text: "${model.priceBeforeDiscount} ر.س",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.sp,
+                          decoration: TextDecoration.lineThrough,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      )
+                    ])),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      start: 24.0, end: 24, top: 19, bottom: 10),
+                  child: SizedBox(
+                      height: 40,
+                      child: AppButton(
+                        title: "أضف للسلة",
+                        onPress: () {},
+                        color: const Color(0xff61B80C),
+                      )),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
