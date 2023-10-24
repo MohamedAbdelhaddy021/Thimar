@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppInput extends StatefulWidget {
-  final bool isPassword, isIcon, isEnabled;
+  final bool isPassword, isPhone, isEnabled;
   final double bottom;
   final Color fillColor,prefixColor;
   final String image, labelText;
@@ -13,7 +14,7 @@ class AppInput extends StatefulWidget {
     super.key,
     this.isPassword = false,
     required this.image,
-    this.isIcon = false,
+    this.isPhone = false,
     this.bottom = 16,
     required this.labelText,
     this.isEnabled = true,
@@ -21,7 +22,7 @@ class AppInput extends StatefulWidget {
     this.validator,
     this.inputType = TextInputType.text,
     this.fillColor = Colors.white,
-    this.prefixColor = Colors.white,
+    this.prefixColor = Colors.grey,
   });
 
   @override
@@ -46,22 +47,23 @@ class _AppInputState extends State<AppInput> {
         decoration: InputDecoration(
           fillColor: widget.fillColor,
             enabled: widget.isEnabled,
-            icon: widget.isIcon
+            icon: widget.isPhone
                 ? Container(
-                    width: 60,
-                    height: 60,
+                    width: 60.h,
+                    height: 60.h,
                     decoration: BoxDecoration(
                         border: Border.all(
-                            width: 1, color: const Color(0xffF3F3F3)),
-                        borderRadius: BorderRadius.circular(15),
+                            width: 1.w, color: const Color(0xffF3F3F3)),
+                        borderRadius: BorderRadius.circular(15.r),
                         color: Colors.white),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
                           "assets/images/saudi.png",
-                          width: 32,
-                          height: 20,
+                          width: 32.w,
+                          height: 20.h,
+                          fit: BoxFit.scaleDown,
                         ),
                         const SizedBox(
                           height: 4,
@@ -71,7 +73,7 @@ class _AppInputState extends State<AppInput> {
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w400,
-                              fontSize: 15),
+                              fontSize: 15.sp),
                         )
                       ],
                     ),
@@ -89,12 +91,11 @@ class _AppInputState extends State<AppInput> {
                   )
                 : null,
             prefixIcon: Padding(
-
               padding: const EdgeInsets.all(12.0),
               child: Image.asset(
               color: widget.prefixColor,  widget.image,
-                height: 24,
-                width: 24,
+                height: 20.h,
+                width: 18.w,
               ),
             )),
       ),

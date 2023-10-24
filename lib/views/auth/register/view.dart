@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar/views/auth/register/states.dart';
 
 import '../../../core/design/app_button.dart';
@@ -34,36 +35,37 @@ class _RegisterViewState extends State<RegisterView> {
                   height: double.infinity,
                 ),
                 Form(
-                  key: cubit.formKey,
+                  key: cubit.registerFormKey,
                   child: ListView(
+                    physics: const BouncingScrollPhysics(),
                     children: [
                       Image.asset(
                         "assets/images/logo.png",
-                        width: 130,
-                        height: 126,
+                        width: 130.w,
+                        height: 126.h,
                       ),
-                      const SizedBox(
-                        height: 21,
+                      SizedBox(
+                        height: 21.h,
                       ),
                       Text(
                         "مرحبا بك مرة أخرى",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 15.sp,
                             color: Theme.of(context).primaryColor),
                       ),
-                      const SizedBox(
-                        height: 4,
+                      SizedBox(
+                        height: 10.h,
                       ),
-                      const Text(
+                      Text(
                         "يمكنك تسجيل حساب جديد الأن",
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 16,
-                            color: Color(0xff707070)),
+                            fontSize: 15.sp,
+                            color: const Color(0xff707070)),
                       ),
-                      const SizedBox(
-                        height: 28,
+                      SizedBox(
+                        height: 28.h,
                       ),
                       AppInput(
                         controller: cubit.fullNameController,
@@ -72,6 +74,8 @@ class _RegisterViewState extends State<RegisterView> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return ("اسم المستخدم غير موجود");
+                          } else if (value.length < 3) {
+                            return "حقل اسم المستخدم على الأقل 3 حروف ";
                           }
                           return null;
                         },
@@ -79,11 +83,13 @@ class _RegisterViewState extends State<RegisterView> {
                       AppInput(
                         controller: cubit.phoneController,
                         image: "assets/images/phone.png",
-                        isIcon: true,
+                        isPhone: true,
                         labelText: "رقم الجوال",
                         validator: (value) {
                           if (value!.isEmpty) {
                             return ("رقم الجوال غير موجود");
+                          } else if (value.length < 10) {
+                            return "حقل رقم الجوال على الأقل 10 حروف ";
                           }
                           return null;
                         },
@@ -91,15 +97,13 @@ class _RegisterViewState extends State<RegisterView> {
                       StatefulBuilder(
                         builder: (context, setState) => GestureDetector(
                           onTap: () async {
-                            final result =
-                                await showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) =>
-                                        const CitiesSheet());
+                            final result = await showModalBottomSheet(
+                                context: context,
+                                builder: (context) => const CitiesSheet());
                             setState(() {});
-                            if(result!=null){
-                              cubit.selectedCity =result;
-                              setState((){});
+                            if (result != null) {
+                              cubit.selectedCity = result;
+                              setState(() {});
                             }
                           },
                           child: Row(
@@ -120,20 +124,6 @@ class _RegisterViewState extends State<RegisterView> {
                                   ),
                                 ),
                               ),
-                              if(cubit.selectedCity!=null)
-                              Padding(
-                                padding:  const EdgeInsetsDirectional.only(start:8,bottom: 40.0),
-                                child: IconButton(
-                                    onPressed: () {
-                                      cubit.selectedCity =null;
-                                      setState((){});
-                                    },
-                                    icon: Icon(
-                                      Icons.clear,
-                                      size: 28,
-                                      color: Theme.of(context).primaryColor,
-                                    )),
-                              )
                             ],
                           ),
                         ),
@@ -146,6 +136,8 @@ class _RegisterViewState extends State<RegisterView> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return ("كلمة المرور غير موجود");
+                          } else if (value.length < 8) {
+                            return "حقل كلمة المرور على الأقل 8 حروف ";
                           }
                           return null;
                         },
@@ -154,11 +146,15 @@ class _RegisterViewState extends State<RegisterView> {
                         controller: cubit.confirmationPasswordController,
                         isPassword: true,
                         image: "assets/images/lock.png",
-                        labelText: "كلمة المرور",
+                        labelText: "تأكيد كلمة المرور",
                         bottom: 24,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return ("كلمة المرور غير موجود");
+                          } else if (value.length < 8) {
+                            return "حقل كلمة المرور على الأقل 8 حروف ";
+                          } else if (value != cubit.passwordController.text) {
+                            return "كلمتان المرور غير متطابقة ";
                           }
                           return null;
                         },
@@ -177,8 +173,8 @@ class _RegisterViewState extends State<RegisterView> {
                                   });
                             }
                           }),
-                      const SizedBox(
-                        height: 45,
+                      SizedBox(
+                        height: 45.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -187,7 +183,7 @@ class _RegisterViewState extends State<RegisterView> {
                             "لديك حساب بالفعل ؟",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
-                                fontSize: 17,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500),
                           ),
                           TextButton(
@@ -198,8 +194,8 @@ class _RegisterViewState extends State<RegisterView> {
                                 "تسجيل الدخول",
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700),
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold),
                               ))
                         ],
                       )

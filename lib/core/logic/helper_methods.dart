@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void navigateTo(Widget page) {
-  Navigator.of(navigatorKey.currentContext!)
-      .push(MaterialPageRoute(builder: (_) => page));
+  Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder: (_)=>page));
 }
 
 void showMessage(String message) {
@@ -14,5 +13,5 @@ void showMessage(String message) {
     showCloseIcon: true,
     closeIconColor: Colors.red,
   ));
-  print(message);
+  debugPrint(message);
 }

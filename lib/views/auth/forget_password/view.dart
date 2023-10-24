@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:thimar/views/auth/forget_password/cubit.dart';
 
 import '../../../core/design/app_button.dart';
 import '../../../core/design/app_input.dart';
 import '../../../core/logic/helper_methods.dart';
-import '../create_new_password/view.dart';
 import '../login/view.dart';
 
 class ForgetPasswordView extends StatelessWidget {
-   ForgetPasswordView({super.key});
-
-  final formKey =GlobalKey<FormState>();
-
+  const ForgetPasswordView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
@@ -33,88 +31,94 @@ class ForgetPasswordView extends StatelessWidget {
                     fit: BoxFit.fill,
                     height: double.infinity,
                   ),
-                  ListView(
-                    children: [
-                      Image.asset(
-                        "assets/images/logo.png",
-                        width: 130,
-                        height: 126,
-                      ),
-                      const SizedBox(
-                        height: 21,
-                      ),
-                      Text(
-                        "نسيت كلمة المرور",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      const Text(
-                        "أدخل رقم الجوال المرتبط بحسابك",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 15,
-                            color: Color(0xff707070)),
-                      ),
-                      const SizedBox(
-                        height: 28,
-                      ),
-                      Form(
-                        key: formKey,
-                        child: AppInput(
-                          image: "assets/images/phone.png",
-                          isIcon: true,
-                          labelText: "رقم الجوال",
-                          validator: (value){
-                            if(value!.isEmpty){
-                              return "يجب ادخال كلمة المرور صحيحة";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      AppButton(
-                          title: "تأكيد رقم الجوال ",
-                          onPress: () {
-                            if(formKey.currentState!.validate()){
-                              navigateTo(const CreateNewPasswordView());
-                            }
-                          }
-                           ),
-                      const SizedBox(
-                        height: 45,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  Builder(
+                    builder: (context) {
+                      ForgetPasswordCubit cubit = BlocProvider.of(context);
+                      return ListView(
                         children: [
-                          Text(
-                            " لديك حساب بالفعل ؟",
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500),
+                          Image.asset(
+                            "assets/images/logo.png",
+                            width: 130.w,
+                            height: 126.h,
                           ),
-                          TextButton(
-                              onPressed: () {
-                                navigateTo(const LoginView());
+                          SizedBox(
+                            height: 21.h,
+                          ),
+                          Text(
+                            "نسيت كلمة المرور",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Text(
+                            "أدخل رقم الجوال المرتبط بحسابك",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 15.sp,
+                              color: const Color(0xff707070),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 28.h,
+                          ),
+                          Form(
+                            key: cubit.formKey,
+                            child: AppInput(
+                              image: "assets/images/phone.png",
+                              isPhone: true,
+                              controller: cubit.phoneController,
+                              labelText: "رقم الجوال",
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "أدخل رقم الجوال ";
+                                } else if (value.length < 10) {
+                                  return "حقل رقم الجوال على الأقل 10 حروف ";
+                                }
+                                return null;
                               },
-                              child: Text(
-                                "تسجيل الدخول",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 24.h,
+                          ),
+                          AppButton(
+                              title: "تأكيد رقم الجوال ",
+                              onPress: () {
+                                cubit.forgetPassword();
+                              }),
+                          SizedBox(
+                            height: 45.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                " لديك حساب بالفعل ؟",
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700),
-                              ))
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    navigateTo(const LoginView());
+                                  },
+                                  child: Text(
+                                    "تسجيل الدخول",
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ))
+                            ],
+                          )
                         ],
-                      )
-                    ],
+                      );
+                    }
                   )
                 ],
               ),

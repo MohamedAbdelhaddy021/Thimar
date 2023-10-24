@@ -15,13 +15,13 @@ class RegisterCubit extends Cubit<RegisterStates> {
   final passwordController = TextEditingController();
 
   bool isLoading = false;
-  final formKey = GlobalKey<FormState>();
+  final registerFormKey = GlobalKey<FormState>();
 
   String? selectedCityText;
   CityModel? selectedCity;
 
   void register() async {
-    if (formKey.currentState!.validate()) {
+    if (registerFormKey.currentState!.validate()) {
       emit(RegisterLoadingState());
       final response =
       await DioHelper().sendData("client_register", data: {
@@ -30,18 +30,15 @@ class RegisterCubit extends Cubit<RegisterStates> {
         "password_confirmation": confirmationPasswordController.text,
         "phone": phoneController.text,
         "country_id": 1,
-        "city_id": selectedCity?.id ?? 12,
+        "city_id": selectedCity?.id ,
       });
       if (response!.isSuccess) {
+        navigateTo(OtpCodeView(isActiveAccount: true, phone: phoneController.text,));
         emit(RegisterSuccessState());
-        navigateTo(
-            OtpCodeView(isActiveAccount: true, phone: phoneController.text,));
       }
       else {
         emit(RegisterFailedState());
       }
     }
-
   }
-
 }

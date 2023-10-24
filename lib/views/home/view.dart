@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thimar/views/home/pages/favs/view.dart';
 import 'package:thimar/views/home/pages/home/view.dart';
@@ -65,8 +66,8 @@ class _HomeViewState extends State<HomeView> {
                           ? Colors.white
                           : const Color(0xffAED489),
                       "assets/icons/svg/${icons[index]}",
-                      width: 23,
-                      height: 23,
+                      width: 23.w,
+                      height: 23.w,
                     ),
                   )))
         ],

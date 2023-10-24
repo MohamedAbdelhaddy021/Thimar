@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../features/cities/bloc/cubit.dart';
 import '../../features/cities/bloc/states.dart';
@@ -19,10 +20,14 @@ class _CitiesSheetState extends State<CitiesSheet> {
       builder: (context) {
         CitiesCubit cubit =BlocProvider.of(context);
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "اختر مدينتك ",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "اختر مدينتك ",
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              ),
             ),
             BlocBuilder(
               bloc: cubit,

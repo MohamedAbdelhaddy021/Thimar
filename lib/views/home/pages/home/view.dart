@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
+import 'package:thimar/views/show_product/cubit.dart';
 
 import '../../../../core/design/app_button.dart';
 import '../../../../core/design/app_input.dart';
-import '../../../../core/logic/cache_helper.dart';
-import '../../../../core/logic/helper_methods.dart';
 import '../../../../features/category/cubit/cubit.dart';
 import '../../../../features/category/cubit/states.dart';
 import '../../../../features/category/model.dart';
@@ -36,13 +36,15 @@ class _HomePageState extends State<HomePage> {
       appBar: const CustomAppBar(),
       body: SafeArea(
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 21),
-              child: AppInput(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 21.h),
+              child:  AppInput(
                 image: "assets/images/search.png",
                 labelText: "ابحث عن ماتريد؟",
-                prefixColor: Color(0xffB9C9A8),
+                prefixColor: const Color(0xffB9C9A8),
+                fillColor: Theme.of(context).primaryColor.withOpacity(.03),
               ),
             ),
             BlocBuilder<SliderCubit, SliderStates>(builder: (context, state) {
@@ -61,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                               setState(() {});
                             },
                             autoPlayAnimationDuration:
-                                const Duration(seconds: 1, milliseconds: 500)),
+                                const Duration(seconds: 3, milliseconds: 500)),
                         items: List.generate(
                           state.list.length,
                           (index) => CachedNetworkImage(
@@ -69,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                             fit: BoxFit.fill,
                             imageUrl: state.list[index].media,
                             placeholder: (context, url) => Container(
+                             height: 164 ,
                               color: Colors.grey.withOpacity(.04),
                             ),
                           ),
@@ -207,120 +210,125 @@ class _ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(17), boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(.02),
-          offset: const Offset(0, 2),
-          blurStyle: BlurStyle.solid,
-          blurRadius: 11,
-        )
-      ]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(11.r),
-              child: Stack(
-                alignment: AlignmentDirectional.topEnd,
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: model.mainImage,
-                    width: 145.w,
-                    height: 117.h,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    width: 54.w,
-                    height: 19.h,
-                    padding: EdgeInsets.only(top: 3.0.h),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadiusDirectional.only(
-                            bottomStart: Radius.circular(11.r))),
-                    child: Center(
-                      child: Text(
-                        "${model.discount} %",
-                        textDirection: TextDirection.ltr,
-                        style:  TextStyle(
-                            color: Colors.white,
-                            fontFamily: "l",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.sp),
-                      ),
+    return GestureDetector(
+      onTap: (){
+        ProductDetailsCubit().getDetails();
+      },
+      child: Container(
+        decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(17), boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.02),
+            offset: const Offset(0, 2),
+            blurStyle: BlurStyle.solid,
+            blurRadius: 11,
+          )
+        ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(11.r),
+                child: Stack(
+                  alignment: AlignmentDirectional.topEnd,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: model.mainImage,
+                      width: 145.w,
+                      height: 117.h,
+                      fit: BoxFit.cover,
                     ),
-                  )
-                ],
+                    Container(
+                      width: 54.w,
+                      height: 19.h,
+                      padding: EdgeInsets.only(top: 3.0.h),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadiusDirectional.only(
+                              bottomStart: Radius.circular(11.r))),
+                      child: Center(
+                        child: Text(
+                          "${model.discount} %",
+                          textDirection: TextDirection.ltr,
+                          style:  TextStyle(
+                              color: Colors.white,
+                              fontFamily: "l",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 8.h,
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.only(start: 9.0.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  model.title,
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                SizedBox(
-                  height: 4.h,
-                ),
-                Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 4.0.h),
-                  child: Text(
-                    "السعر / 1كجم",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w300,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-                Text.rich(TextSpan(
-                    text: "${model.price} ر.س",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    children: [
-                      const TextSpan(text: "\t"),
-                      TextSpan(
-                        text: "${model.priceBeforeDiscount} ر.س",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16.sp,
-                          decoration: TextDecoration.lineThrough,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      )
-                    ])),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                      start: 24.0, end: 24, top: 10, bottom: 10),
-                  child: AppButton(
-                    title: "أضف للسلة",
-                    width: 115.w,
-                    height: 35.h,
-                    radius: 9.r,
-                    onPress: () {},
-                    color: const Color(0xff61B80C),
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 8.h,
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsetsDirectional.only(start: 9.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.title,
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(vertical: 4.0.h),
+                    child: Text(
+                      "السعر / 1كجم",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w300,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  Text.rich(TextSpan(
+                      text: "${model.price} ر.س",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      children: [
+                        const TextSpan(text: "\t"),
+                        TextSpan(
+                          text: "${model.priceBeforeDiscount} ر.س",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.sp,
+                            decoration: TextDecoration.lineThrough,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        )
+                      ])),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: 24.0, end: 24, top: 10, bottom: 10),
+                    child: AppButton(
+                      title: "أضف للسلة",
+                      width: 115.w,
+                      height: 35.h,
+                      radius: 9.r,
+                      onPress: () {},
+                      color: const Color(0xff61B80C),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -377,45 +385,47 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SizedBox(
-        height: 60,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Image.asset(
+        height: 60.h,
+        width: double.infinity,
+        child: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
                 "assets/images/logo.png",
                 width: 23,
                 height: 23,
               ),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            Text(
-              "سلة ثمار",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Theme.of(context).primaryColor),
-            ),
-            Expanded(
-              child: Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                    text: "التوصيل إلى\n",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).primaryColor),
-                    children: const [
-                      TextSpan(
-                          text: "شارع الملك فهد - جدة",
-                          style: TextStyle(fontWeight: FontWeight.w500))
-                    ]),
+              const SizedBox(
+                width: 3,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 20.0),
-              child: GestureDetector(
+              Text(
+                "سلة ثمار",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Theme.of(context).primaryColor),
+              ),
+              Expanded(
+                child: Padding(
+                  padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/9.5),
+                  child: Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                        text: "التوصيل إلى\n",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).primaryColor),
+                        children: const [
+                          TextSpan(
+                              text: "شارع الملك فهد - جدة",
+                              style: TextStyle(fontWeight: FontWeight.w500))
+                        ]),
+                  ),
+                ),
+              ),
+              GestureDetector(
                 onTap: () async {},
                 child: Badge(
                   alignment: AlignmentDirectional.topStart,
@@ -442,8 +452,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

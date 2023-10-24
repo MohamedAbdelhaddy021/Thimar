@@ -191,9 +191,10 @@ class MyAccountPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: ()async{
+                onTap: () async {
                   await CacheHelper.clear();
-                  navigateTo(const LoginView());
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const LoginView()));
                 },
                 child: Container(
                   height: 50.h,
@@ -222,8 +223,7 @@ class MyAccountPage extends StatelessWidget {
                       ),
                       SvgPicture.asset(
                         "assets/icons/svg/turn_off.svg",
-                        // color: Theme.of(context).primaryColor,
-                        theme: SvgTheme(fontSize: 20,currentColor: Colors.red),
+                        color: Theme.of(context).primaryColor,
                       )
                     ],
                   ),
