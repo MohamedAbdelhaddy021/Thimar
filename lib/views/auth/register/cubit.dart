@@ -14,7 +14,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
   final confirmationPasswordController = TextEditingController();
   final passwordController = TextEditingController();
 
-  bool isLoading = false;
   final registerFormKey = GlobalKey<FormState>();
 
   String? selectedCityText;

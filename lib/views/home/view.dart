@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thimar/views/home/pages/favs/view.dart';
-import 'package:thimar/views/home/pages/home/view.dart';
+import 'package:thimar/views/home/pages/main/view.dart';
 import 'package:thimar/views/home/pages/my_account/view.dart';
 import 'package:thimar/views/home/pages/my_orders/view.dart';
 import 'package:thimar/views/home/pages/notifications/view.dart';

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void navigateTo(Widget page) {
-  Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder: (_)=>page));
+void navigateTo(Widget page)  {
+  Navigator.push(
+    navigatorKey.currentState!.context,
+    MaterialPageRoute(builder: (BuildContext context) => page),
+  );
 }
 
 void showMessage(String message) {
-  ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(SnackBar(
+  ScaffoldMessenger.of(navigatorKey.currentState!.context,).showSnackBar(SnackBar(
     content: Text(message),
     behavior: SnackBarBehavior.floating,
     showCloseIcon: true,

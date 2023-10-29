@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thimar/views/auth/reset_password/states.dart';
@@ -25,7 +24,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordStates> {
       );
       if (response!.isSuccess) {
         // showMessage(response.message);
-        navigateTo(const LoginView());
+        navigateTo(const LoginView(),);
         emit(GetResetPasswordSuccessState());
       } else {
         emit(GetResetPasswordFailedState());

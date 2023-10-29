@@ -1,3 +1,4 @@
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thimar/core/logic/dio_helper.dart';
 import 'package:thimar/core/logic/helper_methods.dart';
@@ -14,7 +15,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStates> {
     final response = await DioHelper().getData("categories/1");
     if (response!.isSuccess){
       final model =ProductsData.fromJson(response.response!.data);
-      navigateTo(ProductDetailsView(model: model.list[2]));
+      navigateTo(ProductDetailsView(model: model.list[2]),);
       emit(ProductGetSuccessState(list: model.list));
     }else {
       emit(ProductGetFailedState());

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:thimar/core/logic/helper_methods.dart';
 import 'package:thimar/views/show_product/cubit.dart';
 
 import '../../../../core/design/app_button.dart';
@@ -18,7 +17,6 @@ import '../../../../features/products/model.dart';
 import '../../../../features/slider/bloc/cubit.dart';
 import '../../../../features/slider/bloc/states.dart';
 import '../../../auth/login/states.dart';
-import '../../../auth/login/view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 21.h),
-              child:  AppInput(
+              child: AppInput(
                 image: "assets/images/search.png",
                 labelText: "ابحث عن ماتريد؟",
                 prefixColor: const Color(0xffB9C9A8),
@@ -71,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                             fit: BoxFit.fill,
                             imageUrl: state.list[index].media,
                             placeholder: (context, url) => Container(
-                             height: 164 ,
+                              height: 164,
                               color: Colors.grey.withOpacity(.04),
                             ),
                           ),
@@ -153,9 +151,7 @@ class _HomePageState extends State<HomePage> {
                 return const Text("Failed");
               }
             }),
-            const SizedBox(
-              height: 22,
-            ),
+            SizedBox(height: 22.h),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -211,22 +207,24 @@ class _ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         ProductDetailsCubit().getDetails();
       },
       child: Container(
-        decoration:
-        BoxDecoration(borderRadius: BorderRadius.circular(17), boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(.02),
-            offset: const Offset(0, 2),
-            blurStyle: BlurStyle.solid,
-            blurRadius: 11,
-          )
-        ]),
+        decoration: BoxDecoration(
+          color: Colors.white,
+            borderRadius: BorderRadius.circular(17.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(.1),
+                offset: const Offset(0, 2),
+                blurRadius: 11,
+              )
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(height: 8.h,),
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(11.r),
@@ -239,6 +237,7 @@ class _ProductItem extends StatelessWidget {
                       height: 117.h,
                       fit: BoxFit.cover,
                     ),
+                    SizedBox(height: 20.h,),
                     Container(
                       width: 54.w,
                       height: 19.h,
@@ -251,7 +250,7 @@ class _ProductItem extends StatelessWidget {
                         child: Text(
                           "${model.discount} %",
                           textDirection: TextDirection.ltr,
-                          style:  TextStyle(
+                          style: TextStyle(
                               color: Colors.white,
                               fontFamily: "l",
                               fontWeight: FontWeight.bold,
@@ -283,7 +282,7 @@ class _ProductItem extends StatelessWidget {
                     height: 4.h,
                   ),
                   Padding(
-                    padding:  EdgeInsets.symmetric(vertical: 4.0.h),
+                    padding: EdgeInsets.symmetric(vertical: 4.0.h),
                     child: Text(
                       "السعر / 1كجم",
                       style: TextStyle(
@@ -388,7 +387,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 60.h,
         width: double.infinity,
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -409,7 +408,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/9.5),
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 9.5),
                   child: Text.rich(
                     textAlign: TextAlign.center,
                     TextSpan(
@@ -425,30 +425,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () async {},
-                child: Badge(
-                  alignment: AlignmentDirectional.topStart,
-                  offset: const Offset(4, -5.5),
-                  backgroundColor: Theme.of(context).primaryColor,
-                  label: const Text(
-                    "3",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+              Badge(
+                alignment: AlignmentDirectional.topStart,
+                offset: const Offset(4, -5.5),
+                backgroundColor: Theme.of(context).primaryColor,
+                label: const Text(
+                  "3",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Container(
-                    width: 35,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: const Color(0xff4C8613).withOpacity(.2),
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/icons/svg/bag.svg",
-                      fit: BoxFit.scaleDown,
-                    ),
+                ),
+                child: Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: const Color(0xff4C8613).withOpacity(.2),
+                  ),
+                  child: SvgPicture.asset(
+                    "assets/icons/svg/bag.svg",
+                    fit: BoxFit.scaleDown,
                   ),
                 ),
               ),

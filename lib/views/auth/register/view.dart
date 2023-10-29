@@ -188,7 +188,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           TextButton(
                               onPressed: () {
-                                navigateTo(const LoginView());
+                                navigateTo(const LoginView(),);
                               },
                               child: Text(
                                 "تسجيل الدخول",

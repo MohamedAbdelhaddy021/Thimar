@@ -14,8 +14,8 @@ class LoginCubit extends Cubit<LoginStates> {
   final loginFormKey = GlobalKey<FormState>();
   bool isHidden = true;
 
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
+  final phoneController = TextEditingController(text: "01098603578");
+  final passwordController = TextEditingController(text: "123456789");
 
   void login() async {
     if (loginFormKey.currentState!.validate()) {
@@ -35,7 +35,7 @@ class LoginCubit extends Cubit<LoginStates> {
         }
         final model = UserData.fromJson(response.response!.data);
         await CacheHelper.saveUserDetail(model.model);
-        navigateTo(const HomeView());
+        navigateTo(const HomeView(),);
         emit(LoginSuccessState());
       } else {
         // showMessage(response.message);

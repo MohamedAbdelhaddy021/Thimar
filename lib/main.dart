@@ -7,10 +7,9 @@ import 'package:thimar/views/auth/forget_password/cubit.dart';
 import 'package:thimar/views/auth/login/cubit.dart';
 import 'package:thimar/views/auth/register/cubit.dart';
 import 'package:thimar/views/auth/reset_password/cubit.dart';
-import 'package:thimar/views/home/pages/home/view.dart';
-import 'package:thimar/views/home/view.dart';
 import 'package:thimar/views/show_product/cubit.dart';
 import 'package:thimar/views/splash/view.dart';
+
 import 'core/logic/helper_methods.dart';
 import 'features/category/cubit/cubit.dart';
 import 'features/cities/bloc/cubit.dart';
@@ -38,7 +37,8 @@ class ThimarApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoginCubit(),
-        ),BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => OTPCubit(),
         ),
         BlocProvider(
@@ -78,7 +78,6 @@ class ThimarApp extends StatelessWidget {
             scaffoldBackgroundColor: Colors.white,
             appBarTheme: AppBarTheme(
                 centerTitle: true,
-                // toolbarHeight: 100,
                 backgroundColor: Colors.white,
                 elevation: 0,
                 titleTextStyle: TextStyle(
@@ -92,11 +91,11 @@ class ThimarApp extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide:
-                  const BorderSide(width: 1, color: Color(0xffF3F3F3))),
+                      const BorderSide(width: 1, color: Color(0xffF3F3F3))),
               disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide:
-                  const BorderSide(width: 1, color: Color(0xffF3F3F3))),
+                      const BorderSide(width: 1, color: Color(0xffF3F3F3))),
               fillColor: Colors.white,
               filled: true,
             ),
@@ -108,7 +107,7 @@ class ThimarApp extends StatelessWidget {
             ),
             primarySwatch: getMyMaterialColor(),
           ),
-          home: const HomeView(),
+          home: const SplashView(),
         ),
       ),
     );

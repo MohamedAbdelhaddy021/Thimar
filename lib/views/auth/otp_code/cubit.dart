@@ -24,7 +24,7 @@ class OTPCubit extends Cubit<OTPStates> {
       "device_token": "test"
     });
     if (response!.isSuccess) {
-      navigateTo(const LoginView());
+      navigateTo(const LoginView(),);
       emit(OTPCorrectState());
     } else
       {
@@ -32,7 +32,7 @@ class OTPCubit extends Cubit<OTPStates> {
         ResetPasswordView(
           phone: phone,
           code: codeController.text,
-        ),
+        )
       );
     }
     emit(OTPFailureState());

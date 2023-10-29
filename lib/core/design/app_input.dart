@@ -44,6 +44,10 @@ class _AppInputState extends State<AppInput> {
         validator: widget.validator,
         obscureText: isHidden && widget.isPassword,
         keyboardType: widget.inputType,
+        style: TextStyle(
+          fontSize: 14.sp,
+          color: Theme.of(context).primaryColor
+        ),
         decoration: InputDecoration(
           fillColor: widget.fillColor,
             enabled: widget.isEnabled,

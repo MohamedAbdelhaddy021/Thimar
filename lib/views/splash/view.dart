@@ -5,7 +5,7 @@ import 'package:thimar/views/home/view.dart';
 
 import '../../core/logic/cache_helper.dart';
 import '../auth/login/view.dart';
-import '../home/pages/home/view.dart';
+import '../home/pages/main/view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

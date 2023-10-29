@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 15.sp,
-                          color: Color(0xff707070)),
+                          color: const Color(0xff707070)),
                     ),
                     SizedBox(
                       height: 28.h,
@@ -96,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                         alignment: AlignmentDirectional.centerEnd,
                         child: TextButton(
                             onPressed: () {
-                              navigateTo(const ForgetPasswordView());
+                              navigateTo(const ForgetPasswordView(),);
                             },
                             child: const Text(
                               "نسيت كلمة المرور ؟",
@@ -132,7 +132,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         TextButton(
                             onPressed: () {
-                              navigateTo(const RegisterView());
+                              navigateTo(const RegisterView(),);
                             },
                             child: Text(
                               "تسجيل الأن",
