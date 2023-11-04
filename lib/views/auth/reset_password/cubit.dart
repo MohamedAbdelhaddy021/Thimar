@@ -24,7 +24,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordStates> {
       );
       if (response!.isSuccess) {
         // showMessage(response.message);
-        navigateTo(const LoginView(),);
+        navigateTo(const LoginView(),removeHistory: true);
         emit(GetResetPasswordSuccessState());
       } else {
         emit(GetResetPasswordFailedState());

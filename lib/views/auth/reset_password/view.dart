@@ -119,7 +119,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                         ),
                         TextButton(
                             onPressed: () {
-                              navigateTo(const LoginView(),);
+                              navigateTo(const LoginView(),removeHistory: true);
                             },
                             child: Text(
                               "تسجيل الدخول",

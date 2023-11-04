@@ -18,7 +18,7 @@ class _CitiesSheetState extends State<CitiesSheet> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        CitiesCubit cubit =BlocProvider.of(context);
+        CitiesCubit cubit =BlocProvider.of(context)..getData();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -67,12 +67,12 @@ class _ItemCity extends StatelessWidget {
         Navigator.pop(context, model);
       },
       child: Container(
-        height: 40,
+        height: 40.h,
         margin: const EdgeInsetsDirectional.only(bottom: 16),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).primaryColor.withOpacity(.2)),
-        child: Center(child: Text(model.name)),
+        child: Center(child: Text(model.name,style: TextStyle(fontWeight: FontWeight.w500),)),
       ),
     );
   }

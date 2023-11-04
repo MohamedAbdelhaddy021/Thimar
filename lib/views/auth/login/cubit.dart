@@ -11,14 +11,14 @@ import '../../home/view.dart';
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginStates());
 
-  final loginFormKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   bool isHidden = true;
 
   final phoneController = TextEditingController(text: "01098603578");
   final passwordController = TextEditingController(text: "123456789");
 
   void login() async {
-    if (loginFormKey.currentState!.validate()) {
+    if (formKey.currentState!.validate()) {
       emit(LoginLoadingState());
       final response = await DioHelper().sendData("login", data: {
         "phone": phoneController.text,
@@ -29,13 +29,12 @@ class LoginCubit extends Cubit<LoginStates> {
       });
 
       if (response!.isSuccess) {
-        if(response.response!.data["message"]==""){
+
           debugPrint(response.message);
-          // showMessage(response.message);
-        }
+          showMessage(response.message);
         final model = UserData.fromJson(response.response!.data);
         await CacheHelper.saveUserDetail(model.model);
-        navigateTo(const HomeView(),);
+        navigateTo(HomeView(),removeHistory: true);
         emit(LoginSuccessState());
       } else {
         // showMessage(response.message);

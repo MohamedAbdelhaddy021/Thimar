@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final navigatorKey = GlobalKey<NavigatorState>();
 
-void navigateTo(Widget page)  {
-  Navigator.push(
-    navigatorKey.currentState!.context,
-    MaterialPageRoute(builder: (BuildContext context) => page),
+void navigateTo(Widget page, { bool removeHistory =false }) {
+  Navigator.pushAndRemoveUntil(
+    navigatorKey.currentContext!,
+    MaterialPageRoute(
+      builder: (context) => page,
+    ),
+    (route) => !removeHistory,
   );
 }
 
 void showMessage(String message) {
-  ScaffoldMessenger.of(navigatorKey.currentState!.context,).showSnackBar(SnackBar(
-    content: Text(message),
-    behavior: SnackBarBehavior.floating,
-    showCloseIcon: true,
-    closeIconColor: Colors.red,
-  ));
-  debugPrint(message);
+  if (message.isNotEmpty) {
+    ScaffoldMessenger.of(
+      navigatorKey.currentState!.context,
+    ).showSnackBar(SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.floating,
+      showCloseIcon: true,
+      closeIconColor: Colors.red,
+    ));
+    debugPrint(message);
+  }
 }

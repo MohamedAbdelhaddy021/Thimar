@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:thimar/core/logic/helper_methods.dart';
 
 import '../../../core/design/app_button.dart';
+import '../../../core/logic/helper_methods.dart';
 import '../login/view.dart';
 import 'cubit.dart';
 
@@ -21,12 +21,13 @@ class OtpCodeView extends StatefulWidget {
 }
 
 class _OtpCodeViewState extends State<OtpCodeView> {
+
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      OTPCubit cubit = BlocProvider.of(context);
-      return Scaffold(
-        body: Container(
+    return Scaffold(
+      body: Builder(builder: (context) {
+        OTPCubit cubit = BlocProvider.of(context);
+        return Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
           child: Stack(
             children: [
@@ -54,10 +55,8 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                         fontSize: 15.sp,
                         color: Theme.of(context).primaryColor),
                   ),
-                   SizedBox(
-                    height: 10.h
-                  ),
-                   Text(
+                  SizedBox(height: 10.h),
+                  Text(
                     "أدخل الكود المكون من 4 أرقام المرسل علي رقم الجوال",
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
@@ -96,11 +95,9 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                     controller: cubit.codeController,
                     appContext: (context),
                     length: 4,
-                    textGradient: const LinearGradient(
-                        colors: [Color(0xffC70039), Color(0xffA73121)]),
                     animationType: AnimationType.slide,
                     keyboardType: TextInputType.number,
-                    cursorColor: Colors.red,
+                    cursorColor: Theme.of(context).primaryColor,
                     pinTheme: PinTheme(
                       shape: PinCodeFieldShape.box,
                       fieldHeight: 60.h,
@@ -128,9 +125,12 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                     height: 45,
                   ),
                   StatefulBuilder(
-                    builder: (context, setState) =>CircularCountDownTimer(
-                      width: 66.w,
-                      height: 66.w,
+                    builder: (context, setState) =>
+                        Column(
+                          children: [
+                            CircularCountDownTimer(
+                      width: 66,
+                      height: 66,
                       duration: 30,
                       initialDuration: 22,
                       isReverse: true,
@@ -138,37 +138,39 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                       controller: cubit.countDownController,
                       strokeWidth: 3,
                       onComplete: () {
-                        cubit.isClickable = !cubit.isClickable;
-                        setState(() {});
+                            cubit.isClickable = !cubit.isClickable;
+                            setState(() {});
                       },
                       fillColor: const Color(0xffF3F3F3),
                       ringColor: const Color(0xff4C8613),
                       isReverseAnimation: true,
                     ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Center(
+                                child: SizedBox(
+                                  height: 47.h,
+                                  child: OutlinedButton(
+                                      onPressed: cubit.isClickable
+                                          ? null
+                                          : () {
+                                        cubit.countDownController.start();
+                                        cubit.isClickable = !cubit.isClickable;
+                                        setState(() {});
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15.r))),
+                                      child: Text(
+                                        "إعادة الإرسال",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold, fontSize: 15.sp),
+                                      )),
+                                )),
+                          ],
+                        ),
                   ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Center(
-                      child: SizedBox(
-                    height: 47.h,
-                    child: OutlinedButton(
-                        onPressed: cubit.isClickable
-                            ? null
-                            : () {
-                                cubit.countDownController.start();
-                                cubit.isClickable = !cubit.isClickable;
-                                setState(() {});
-                              },
-                        style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.r))),
-                        child: Text(
-                          "إعادة الإرسال",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15.sp),
-                        )),
-                  )),
                   SizedBox(
                     height: 45.h,
                   ),
@@ -184,7 +186,7 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                       ),
                       TextButton(
                           onPressed: () {
-                            navigateTo(const LoginView());
+                            Navigator.pop(context);
                           },
                           child: Text(
                             "تسجيل الدخول",
@@ -199,8 +201,8 @@ class _OtpCodeViewState extends State<OtpCodeView> {
               )
             ],
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

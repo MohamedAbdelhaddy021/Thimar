@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../core/design/app_button.dart';
 import '../../../../../../core/design/app_input.dart';
 import '../../../../../../core/design/custome_appbar.dart';
-
+import '../../../../../../features/cities/cities.dart';
+import '../../../../../sheets/cities.dart';
 
 class PersonalDetailsPage extends StatelessWidget {
-  const PersonalDetailsPage({super.key});
+  PersonalDetailsPage({super.key});
+
+  CityModel? selectedCity;
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +28,32 @@ class PersonalDetailsPage extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      Container(
-                        width: 85.h,
-                        height: 88.h,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            15.r,
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 85.h,
+                            height: 88.h,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                15.r,
+                              ),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Image.asset(
+                              "assets/images/profile_img.jpg",
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Image.asset(
-                          "assets/images/profile_img.jpg",
-                          fit: BoxFit.cover,
-                        ),
+                          InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.add_a_photo_outlined,
+                                size: 50,
+                                color: Colors.white70,
+                              ))
+                        ],
                       ),
                       SizedBox(
                         height: 14.h,
@@ -73,6 +89,7 @@ class PersonalDetailsPage extends StatelessWidget {
                 fillColor: const Color(0xffFAFFF5),
               ),
               AppInput(
+                inputType: TextInputType.phone,
                 image: "assets/images/phone.png",
                 labelText: "رقم الجوال",
                 isPhone: true,
@@ -80,12 +97,35 @@ class PersonalDetailsPage extends StatelessWidget {
                 prefixColor: Theme.of(context).primaryColor,
                 fillColor: const Color(0xffFAFFF5),
               ),
-              AppInput(
-                image: "assets/images/flag.png",
-                labelText: "المدينة",
-                bottom: 16.h,
-                prefixColor: Theme.of(context).primaryColor,
-                fillColor: const Color(0xffFAFFF5),
+              StatefulBuilder(
+                builder: (context, setState) => GestureDetector(
+                  onTap: () async {
+                    final result = await showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const CitiesSheet());
+                    setState(() {});
+                    if (result != null) {
+                      selectedCity = result;
+                      setState(() {});
+                    }
+                  },
+                  child: AbsorbPointer(
+                    absorbing: true,
+                    child: AppInput(
+                      image: "assets/images/flag.png",
+                      labelText: selectedCity?.name ?? "المدينة",
+                      bottom: 16.h,
+                      prefixColor: Theme.of(context).primaryColor,
+                      fillColor: const Color(0xffFAFFF5),
+                      validator: (value) {
+                        if (selectedCity == null) {
+                          return "برجاء ادخال المدينة";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
               ),
               AppInput(
                 image: "assets/images/lock.png",
@@ -95,7 +135,9 @@ class PersonalDetailsPage extends StatelessWidget {
                 prefixColor: Theme.of(context).primaryColor,
                 fillColor: const Color(0xffFAFFF5),
               ),
-              SizedBox(height: 178.h,),
+              SizedBox(
+                height: 178.h,
+              ),
               AppButton(
                 title: "تعديل البيانات",
                 onPress: () {},

@@ -193,8 +193,9 @@ class MyAccountPage extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   await CacheHelper.clear();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => const LoginView()));
+                  navigateTo(const LoginView(),removeHistory: true);
+                  // Navigator.pushReplacement(context,
+                  //     MaterialPageRoute(builder: (_) => const LoginView()));
                 },
                 child: Container(
                   height: 50.h,

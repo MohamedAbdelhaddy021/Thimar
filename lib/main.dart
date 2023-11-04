@@ -7,7 +7,6 @@ import 'package:thimar/views/auth/forget_password/cubit.dart';
 import 'package:thimar/views/auth/login/cubit.dart';
 import 'package:thimar/views/auth/register/cubit.dart';
 import 'package:thimar/views/auth/reset_password/cubit.dart';
-import 'package:thimar/views/show_product/cubit.dart';
 import 'package:thimar/views/splash/view.dart';
 
 import 'core/logic/helper_methods.dart';
@@ -16,6 +15,7 @@ import 'features/cities/bloc/cubit.dart';
 import 'features/products/bloc/cubit.dart';
 import 'features/slider/bloc/cubit.dart';
 import 'views/auth/otp_code/cubit.dart';
+import 'views/show_product_details/cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,11 +25,11 @@ void main() async {
         statusBarColor: Colors.white, // status bar color
         statusBarIconBrightness: Brightness.dark),
   );
-  runApp(const ThimarApp());
+  runApp(const MyApp());
 }
 
-class ThimarApp extends StatelessWidget {
-  const ThimarApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +54,10 @@ class ThimarApp extends StatelessWidget {
           create: (context) => ProductCubit()..getData(),
         ),
         BlocProvider(
-          create: (context) => CitiesCubit()..getData(),
+          create: (context) => CitiesCubit(),
         ),
         BlocProvider(
-          create: (context) => ProductDetailsCubit()..getDetails(),
+          create: (context) => ProductDetailsCubit(),
         ),
         BlocProvider(
           create: (context) => RegisterCubit(),
@@ -107,7 +107,7 @@ class ThimarApp extends StatelessWidget {
             ),
             primarySwatch: getMyMaterialColor(),
           ),
-          home: const SplashView(),
+          home:  const SplashView(),
         ),
       ),
     );

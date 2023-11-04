@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           GestureDetector(
             onTap: () {
               debugPrint("Go back");
+              Navigator.pop(context);
             },
             child: Container(
               width: 38.h,

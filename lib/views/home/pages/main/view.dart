@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:thimar/views/show_product/cubit.dart';
+import 'package:thimar/core/logic/helper_methods.dart';
+import 'package:thimar/views/show_product_details/view.dart';
 
 import '../../../../core/design/app_button.dart';
 import '../../../../core/design/app_input.dart';
@@ -208,7 +209,8 @@ class _ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ProductDetailsCubit().getDetails();
+        navigateTo(ProductDetailsView(id: model.id));
+        // ProductDetailsCubit();
       },
       child: Container(
         decoration: BoxDecoration(
@@ -409,7 +411,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 9.5),
+                      left: MediaQuery.of(context).size.width / 9.6),
                   child: Text.rich(
                     textAlign: TextAlign.center,
                     TextSpan(
