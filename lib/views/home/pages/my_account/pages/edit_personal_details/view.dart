@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -9,15 +10,28 @@ import '../../../../../../core/design/custome_appbar.dart';
 import '../../../../../../features/cities/cities.dart';
 import '../../../../../sheets/cities.dart';
 
-class PersonalDetailsPage extends StatelessWidget {
-  PersonalDetailsPage({super.key});
+class EditDetailsPage extends StatefulWidget {
+  EditDetailsPage({super.key});
 
+  @override
+  State<EditDetailsPage> createState() => _EditDetailsPageState();
+}
+
+class _EditDetailsPageState extends State<EditDetailsPage> {
   CityModel? selectedCity;
+  String? imagePath;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(
+          title: "البيانات الشخصية",
+          onTap: () {
+            Navigator.pop(
+              context,
+              imagePath,
+            );
+          }),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -41,13 +55,26 @@ class PersonalDetailsPage extends StatelessWidget {
                               ),
                               border: Border.all(color: Colors.grey),
                             ),
-                            child: Image.asset(
-                              "assets/images/profile_img.jpg",
-                              fit: BoxFit.cover,
-                            ),
+                            child: imagePath != null
+                                ? Image.file(
+                                    File(imagePath!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    "assets/images/profile_img.jpg",
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                           InkWell(
-                              onTap: () {},
+                              onTap: () async {
+                                var file = await ImagePicker.platform
+                                    .getImageFromSource(
+                                        source: ImageSource.camera);
+                                if (file != null) {
+                                  imagePath = file.path;
+                                  setState(() {});
+                                }
+                              },
                               child: Icon(
                                 Icons.add_a_photo_outlined,
                                 size: 50,

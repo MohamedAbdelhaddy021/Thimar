@@ -7,6 +7,8 @@ import 'package:thimar/views/auth/forget_password/cubit.dart';
 import 'package:thimar/views/auth/login/cubit.dart';
 import 'package:thimar/views/auth/register/cubit.dart';
 import 'package:thimar/views/auth/reset_password/cubit.dart';
+import 'package:thimar/views/cart/cubit.dart';
+import 'package:thimar/views/home/pages/favs/cubit.dart';
 import 'package:thimar/views/splash/view.dart';
 
 import 'core/logic/helper_methods.dart';
@@ -37,6 +39,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoginCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(),
+        ),
+        BlocProvider(
+          create: (context) => FavoriteCubit()..getFavorites(),
         ),
         BlocProvider(
           create: (context) => OTPCubit(),
@@ -107,7 +115,7 @@ class MyApp extends StatelessWidget {
             ),
             primarySwatch: getMyMaterialColor(),
           ),
-          home:  const SplashView(),
+          home: SplashView(),
         ),
       ),
     );

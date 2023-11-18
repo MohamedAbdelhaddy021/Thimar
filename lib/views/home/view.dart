@@ -21,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
      const HomePage(),
     const MyOrdersPage(),
     NotificationsPage(),
-    const FavPage(),
+    const FavoritesPage(),
      MyAccountPage(),
   ];
 

@@ -1,37 +1,53 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thimar/views/home/pages/my_account/pages/wallet/view.dart';
 
 import '../../../../core/logic/cache_helper.dart';
 import '../../../../core/logic/helper_methods.dart';
 import '../../../auth/login/view.dart';
 
 class MyAccountPage extends StatelessWidget {
-  MyAccountPage({super.key});
+   MyAccountPage({super.key});
 
-  List<String> urls = [
+   List<String> urls = [
     "assets/icons/svg/user.svg",
     "assets/icons/svg/wallet.svg",
     "assets/icons/svg/location.svg",
     "assets/icons/svg/payment.svg",
-    "assets/icons/svg/questions.svg",
-    "assets/icons/svg/privacy.svg",
-    "assets/icons/svg/calling.svg",
-    "assets/icons/svg/suggestion.svg",
-    "assets/icons/svg/share.svg",
+  ];
+   List<String> urls2 = [
+     "assets/icons/svg/questions.svg",
+     "assets/icons/svg/privacy.svg",
+     "assets/icons/svg/calling.svg",
+     "assets/icons/svg/suggestion.svg",
+     "assets/icons/svg/share.svg",
+  ];
+   List<String> urls3 = [
+     "assets/icons/svg/about_app.svg",
+     "assets/icons/svg/language.svg",
+     "assets/icons/svg/constraints.svg",
+     "assets/icons/svg/rate.svg",
   ];
 
-  List<String> name = [
+   List<String> name = [
     "البيانات الشخصية",
     "المحفظة",
     "العناوين",
     "الدفع",
-    "أسئلة متكررة",
-    "سياسة الخصوصية",
-    "تواصل معنا",
-    "الشكاوي والأقتراحات",
-    "مشاركة التطبيق",
+  ];
+   List<String> name2 = [
+     "أسئلة متكررة",
+     "سياسة الخصوصية",
+     "تواصل معنا",
+     "الشكاوي والأقتراحات",
+     "مشاركة التطبيق",
+  ];
+   List<String> name3 = [
+     "عن التطبيق",
+     "تغيير اللغة",
+     "الشروط والأحكام",
+     "تقييم التطبيق",
   ];
 
   @override
@@ -154,7 +170,7 @@ class MyAccountPage extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
                   itemBuilder: (context, index) =>
-                      _Item(imgUrl: urls[index], text: name[index]),
+                      _Item(imgUrl: urls2[index], text: name2[index]),
                   separatorBuilder: (context, index) => const Divider(
                     thickness: .7,
                     color: Color(0xffF6F6F6),
@@ -182,7 +198,7 @@ class MyAccountPage extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
                   itemBuilder: (context, index) =>
-                      _Item(imgUrl: urls[index], text: name[index]),
+                      _Item(imgUrl: urls3[index], text: name3[index]),
                   separatorBuilder: (context, index) => const Divider(
                     thickness: .7,
                     color: Color(0xffF6F6F6),

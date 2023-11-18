@@ -1,9 +1,12 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thimar/core/logic/dio_helper.dart';
+import 'package:thimar/views/show_product_details/model.dart';
 import 'package:thimar/views/show_product_details/states.dart';
 
-import 'model.dart';
+import '../../features/products/model.dart';
+
+
 
 
 

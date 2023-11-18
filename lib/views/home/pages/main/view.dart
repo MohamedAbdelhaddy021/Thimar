@@ -18,6 +18,8 @@ import '../../../../features/products/model.dart';
 import '../../../../features/slider/bloc/cubit.dart';
 import '../../../../features/slider/bloc/states.dart';
 import '../../../auth/login/states.dart';
+import '../../../cart/cubit.dart';
+import '../../../cart/view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -209,7 +211,7 @@ class _ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigateTo(ProductDetailsView(id: model.id));
+        navigateTo(ProductDetailsView(id: model.id, amount: model.amount.toInt(),));
         // ProductDetailsCubit();
       },
       child: Container(
@@ -254,7 +256,6 @@ class _ProductItem extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           style: TextStyle(
                               color: Colors.white,
-                              fontFamily: "l",
                               fontWeight: FontWeight.bold,
                               fontSize: 12.sp),
                         ),
@@ -380,7 +381,7 @@ class _ItemCategory extends StatelessWidget {
 }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -427,29 +428,40 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              Badge(
-                alignment: AlignmentDirectional.topStart,
-                offset: const Offset(4, -5.5),
-                backgroundColor: Theme.of(context).primaryColor,
-                label: const Text(
-                  "3",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                child: Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                    color: const Color(0xff4C8613).withOpacity(.2),
-                  ),
-                  child: SvgPicture.asset(
-                    "assets/icons/svg/bag.svg",
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
+              Builder(
+                builder: (context) {
+                  CartCubit cubit = BlocProvider.of(context);
+                  return GestureDetector(
+                    onTap: (){
+                      cubit.getCartItems();
+                      navigateTo(ShopCartView());
+                    },
+                    child: Badge(
+                      alignment: AlignmentDirectional.topStart,
+                      offset: const Offset(4, -5.5),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      label: const Text(
+                        "3",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      child: Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: const Color(0xff4C8613).withOpacity(.2),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/svg/bag.svg",
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                    ),
+                  );
+                }
               ),
             ],
           ),

@@ -17,6 +17,9 @@ class CacheHelper {
     await _prefs.setBool("isActive", model.isActive);
     await _prefs.setString("token", model.token);
   }
+  static String getUserToken(){
+    return _prefs.getString("token")??"";
+  }
 
   static bool isAuth() {
     String? token = _prefs.getString("token");

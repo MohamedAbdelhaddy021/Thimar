@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({super.key, required this.title, required this.onTap});
+  final String title;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
-              debugPrint("Go back");
-              Navigator.pop(context);
-            },
+            onTap: onTap,
             child: Container(
               width: 38.h,
               height: 38.h,
@@ -33,27 +32,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       .primaryColor),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding:  EdgeInsetsDirectional.only(end: 16.0.w),
-              child: Text(
-                "البيانات الشخصية",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20.0.sp,
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    fontWeight: FontWeight.bold, fontFamily: "Tajawal"
-                ),
-              ),
+          SizedBox(width: MediaQuery.of(context).size.width/3.7,),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20.0.sp,
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
     ));
   }
-
   @override
   // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(60);
