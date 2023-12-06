@@ -24,14 +24,38 @@ class _EditDetailsPageState extends State<EditDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-          title: "البيانات الشخصية",
+      appBar: AppBar(
+        leading: GestureDetector(
           onTap: () {
-            Navigator.pop(
-              context,
-              imagePath,
-            );
-          }),
+            Navigator.pop(context);
+          },
+          child: Container(
+            padding: EdgeInsetsDirectional.only(
+              start: 8,
+            ),
+            margin: EdgeInsets.all(8),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(11),
+              color: Theme.of(context).primaryColor.withOpacity(0.13),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ),
+        title: Text(
+          "البيانات الشخصية",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.sp,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),

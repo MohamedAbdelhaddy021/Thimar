@@ -13,10 +13,10 @@ class CartData {
   late final String status;
   late final String message;
 
-  CartData.fromJson(Map<String, dynamic> json){
-    list = List.from(json['data']).map((e)=>CartModel.fromJson(e)).toList();
+  CartData.fromJson(Map<String, dynamic> json) {
+    list = List.from(json['data']).map((e) => CartModel.fromJson(e)).toList();
     totalPriceBeforeDiscount = json['total_price_before_discount'];
-    totalDiscount = json['total_discount'];
+    totalDiscount = (json['total_discount'] );
     totalPriceWithVat = json['total_price_with_vat'];
     deliveryCost = json['delivery_cost'];
     freeDeliveryPrice = json['free_delivery_price'];
@@ -31,7 +31,6 @@ class CartData {
 }
 
 class CartModel {
-
   late final int id;
   late final String title;
   late final String image;
@@ -41,7 +40,7 @@ class CartModel {
   late final num price;
   late final int remainingAmount;
 
-  CartModel.fromJson(Map<String, dynamic> json){
+  CartModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     image = json['image'];
@@ -49,6 +48,8 @@ class CartModel {
     priceBeforeDiscount = json['price_before_discount'];
     discount = json['discount'];
     price = json['price'];
-    remainingAmount = json['remaining_amount'];
+    remainingAmount = json['remaining_amount'] is double
+        ? (json['remaining_amount'] as double).toInt()
+        : (json['remaining_amount']);
   }
 }

@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:thimar/core/logic/helper_methods.dart';
+import 'package:thimar/views/cart/states.dart';
+import 'package:thimar/views/category/cubit.dart';
+import 'package:thimar/views/category/view.dart';
 import 'package:thimar/views/show_product_details/view.dart';
 
 import '../../../../core/design/app_button.dart';
@@ -22,7 +25,9 @@ import '../../../cart/cubit.dart';
 import '../../../cart/view.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -34,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(),
       body: SafeArea(
         child: ListView(
           physics: const BouncingScrollPhysics(),
@@ -49,8 +54,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             BlocBuilder<SliderCubit, SliderStates>(builder: (context, state) {
-              if (state is LoginLoadingState) {
-                return const CircularProgressIndicator();
+              if (state is LoginFailedState) {
+                return Text("FAILED");
               } else if (state is SliderSuccessState) {
                 return Column(
                   children: [
@@ -101,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 );
               } else {
-                return const Text("Failed");
+                return Center(child: CircularProgressIndicator());
               }
             }),
             Padding(
@@ -128,31 +133,34 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 6,
             ),
-            BlocBuilder<CategoriesCubit, CategoriesStates>(
-                builder: (context, state) {
-              if (state is CategoriesSuccessState) {
-                return SizedBox(
-                  height: 109,
-                  child: ListView.separated(
-                    padding:
-                        const EdgeInsetsDirectional.only(start: 16, end: 16),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) =>
-                        _ItemCategory(model: state.list[index]),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      width: 16,
+            Builder(builder: (context) {
+              CategoryCubit cubit = BlocProvider.of(context);
+              return BlocBuilder<CategoriesCubit, CategoriesStates>(
+                  builder: (context, state) {
+                if (state is CategoriesSuccessState) {
+                  return SizedBox(
+                    height: 109,
+                    child: ListView.separated(
+                      padding:
+                          const EdgeInsetsDirectional.only(start: 16, end: 16),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                          _ItemCategory(model: state.list[index]),
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: 16,
+                      ),
+                      itemCount: state.list.length,
                     ),
-                    itemCount: state.list.length,
-                  ),
-                );
-              } else if (state is CategoriesLoadingState) {
-                return const SizedBox(
-                  height: 109,
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              } else {
-                return const Text("Failed");
-              }
+                  );
+                } else if (state is CategoriesLoadingState) {
+                  return const SizedBox(
+                    height: 109,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                } else {
+                  return const Text("Failed");
+                }
+              });
             }),
             SizedBox(height: 22.h),
             Container(
@@ -211,12 +219,16 @@ class _ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigateTo(ProductDetailsView(id: model.id, amount: model.amount.toInt(),));
-        // ProductDetailsCubit();
+        navigateTo(
+            ProductDetailsView(
+              id: model.id,
+              isFav: model.isFavorite,
+            ),
+            removeHistory: false);
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(17.r),
             boxShadow: [
               BoxShadow(
@@ -228,7 +240,9 @@ class _ProductItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 8.h,),
+            SizedBox(
+              height: 8.h,
+            ),
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(11.r),
@@ -241,7 +255,9 @@ class _ProductItem extends StatelessWidget {
                       height: 117.h,
                       fit: BoxFit.cover,
                     ),
-                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                     Container(
                       width: 54.w,
                       height: 19.h,
@@ -343,45 +359,60 @@ class _ItemCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 76,
-          height: 76,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(11),
-              boxShadow: [
-                BoxShadow(
-                    color: const Color(0xff707070).withOpacity(.03),
-                    offset: const Offset(0, 3),
-                    blurRadius: 6)
-              ]),
-          child: Center(
-            child: Image.network(
-              model.media,
-              height: 60,
-              width: 60,
+    return Builder(builder: (context) {
+      CategoryCubit cubit = BlocProvider.of(context);
+      return GestureDetector(
+        onTap: () {
+          cubit.getData(id: model.id);
+          navigateTo(
+              CategoryView(
+                model: model,
+              ),
+              removeHistory: false);
+        },
+        child: Column(
+          children: [
+            Container(
+              width: 76,
+              height: 76,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(11),
+                  boxShadow: [
+                    BoxShadow(
+                        color: const Color(0xff707070).withOpacity(.03),
+                        offset: const Offset(0, 3),
+                        blurRadius: 6)
+                  ]),
+              child: Center(
+                child: Image.network(
+                  model.media,
+                  height: 60,
+                  width: 60,
+                ),
+              ),
             ),
-          ),
+            SizedBox(
+              height: 26,
+              child: Text(
+                model.name,
+                style: const TextStyle(
+                  color: Color(0xff3E3E3E),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 19,
+                ),
+              ),
+            )
+          ],
         ),
-        SizedBox(
-          height: 26,
-          child: Text(
-            model.name,
-            style: const TextStyle(
-              color: Color(0xff3E3E3E),
-              fontWeight: FontWeight.w500,
-              fontSize: 19,
-            ),
-          ),
-        )
-      ],
-    );
+      );
+    });
   }
 }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key,});
+  const CustomAppBar({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -428,41 +459,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              Builder(
-                builder: (context) {
-                  CartCubit cubit = BlocProvider.of(context);
-                  return GestureDetector(
-                    onTap: (){
-                      cubit.getCartItems();
-                      navigateTo(ShopCartView());
-                    },
-                    child: Badge(
-                      alignment: AlignmentDirectional.topStart,
-                      offset: const Offset(4, -5.5),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      label: const Text(
-                        "3",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: const Color(0xff4C8613).withOpacity(.2),
-                        ),
-                        child: SvgPicture.asset(
-                          "assets/icons/svg/bag.svg",
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
-                  );
-                }
-              ),
+              GestureDetector(
+                onTap: () {
+                  navigateTo(CartView());
+                },
+                child: Container(
+                  width: 32.w,
+                  height: 32.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: const Color(0xff4C8613).withOpacity(.2),
+                  ),
+                  child: SvgPicture.asset(
+                    "assets/icons/svg/bag.svg",
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              )
             ],
           ),
         ),

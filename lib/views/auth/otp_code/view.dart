@@ -22,6 +22,7 @@ class OtpCodeView extends StatefulWidget {
 
 class _OtpCodeViewState extends State<OtpCodeView> {
 
+  final pinKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +93,11 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                     height: 30.h,
                   ),
                   PinCodeTextField(
+                    validator: (value) {
+                      if(value== null){
+                        return "Can't do this";
+                      }
+                    },
                     controller: cubit.codeController,
                     appContext: (context),
                     length: 4,
@@ -118,7 +124,9 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                     builder: (context, state) => AppButton(
                         title: "تأكيد الكود",
                         onPress: () {
-                          cubit.verify(widget.phone);
+                          if(pinKey.currentState!.validate()){
+                            cubit.verify(widget.phone);
+                          }
                         }),
                   ),
                   const SizedBox(

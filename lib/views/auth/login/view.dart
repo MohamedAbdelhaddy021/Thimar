@@ -5,6 +5,7 @@ import 'package:thimar/views/auth/login/states.dart';
 import '../../../core/design/app_button.dart';
 import '../../../core/design/app_input.dart';
 import '../../../core/logic/helper_methods.dart';
+import '../../home/view.dart';
 import '../forget_password/view.dart';
 import '../register/view.dart';
 import 'cubit.dart';
@@ -117,6 +118,7 @@ class _LoginViewState extends State<LoginView> {
                             title: "تسجيل الدخول",
                             onPress: () async {
                               cubit.login();
+
                             });
                       }
                     },

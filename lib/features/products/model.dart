@@ -1,16 +1,13 @@
 class ProductsData {
   late final List<ProductModel> model;
   late final int userCartCount;
-  late final num maxPrice;
   late final num minPrice;
 
   ProductsData.fromJson(Map<String, dynamic> json) {
     model = List.from(json['data'] ?? [])
         .map((e) => ProductModel.fromJson(e))
         .toList();
-    userCartCount = json['user_cart_count'];
-    maxPrice = json['max_price'];
-    minPrice = json['min_price'];
+    minPrice = json['min_price']??0;
   }
 }
 

@@ -9,11 +9,35 @@ class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-          title: "المحفظة",
+      appBar: AppBar(
+        leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
-          }),
+          },
+          child: Container(
+            padding: EdgeInsetsDirectional.only(
+              start: 8,
+            ),
+            margin: EdgeInsets.all(8),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(11),
+              color: Theme.of(context).primaryColor.withOpacity(0.13),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ),
+        title: Text(
+          "المحفظة",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
+        ),
+      ),
       body: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -149,7 +173,6 @@ class WalletPage extends StatelessWidget {
                       ],
                     ),
                   ),
-
                 ],
               ),
             )
@@ -180,7 +203,9 @@ class _ChargeItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 12.h,),
+            SizedBox(
+              height: 12.h,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(

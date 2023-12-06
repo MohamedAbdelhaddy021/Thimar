@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void navigateTo(Widget page, { bool removeHistory =false }) {
+  // Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder: (context) => page,));
   Navigator.pushAndRemoveUntil(
     navigatorKey.currentContext!,
     MaterialPageRoute(

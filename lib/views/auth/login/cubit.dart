@@ -29,15 +29,14 @@ class LoginCubit extends Cubit<LoginStates> {
       });
 
       if (response!.isSuccess) {
-
           debugPrint(response.message);
           showMessage(response.message);
         final model = UserData.fromJson(response.response!.data);
         await CacheHelper.saveUserDetail(model.model);
-        navigateTo(HomeView(),removeHistory: true);
+          navigateTo(HomeView(),removeHistory: true);
         emit(LoginSuccessState());
       } else {
-        // showMessage(response.message);
+         //showMessage(response.message);
         emit(LoginFailedState());
       }
     }

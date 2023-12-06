@@ -1,6 +1,5 @@
 import 'package:thimar/features/products/model.dart';
 
-import 'model.dart';
 
 class FavoriteStates {}
 
@@ -19,3 +18,9 @@ class AddToFavoriteSuccessState extends FavoriteStates {
 class AddToFavoriteLoadingState extends FavoriteStates {}
 
 class AddToFavoriteFailedState extends FavoriteStates {}
+
+class RemoveItemSuccessState extends FavoriteStates {}
+
+class RemoveItemFailedState extends  FavoriteStates {}
+
+class RemoveItemLoadingState extends FavoriteStates {}

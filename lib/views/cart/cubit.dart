@@ -12,8 +12,6 @@ import 'model.dart';
 class CartCubit extends Cubit<CartStates> {
   CartCubit() : super(CartStates());
 
-  // final CartModel model;
-
   Future<void> addToCart({required int id, required int amount}) async {
     emit(AddToCartLoadingState());
     final response = await DioHelper().sendData("client/cart", data: {
@@ -28,13 +26,30 @@ class CartCubit extends Cubit<CartStates> {
   }
 
   Future<void> getCartItems() async {
+
     emit(GetCartItemsLoadingState());
     final response = await DioHelper().getData('client/cart');
     if (response!.isSuccess) {
       final model = CartData.fromJson(response.response!.data);
-      emit(GetCartItemsSuccessState(list: model.list));
+      emit(GetCartItemsSuccessState(model: model));
     } else {
       emit(GetCartItemsFailedState());
+    }
+  }
+
+  Future<void> deleteFromCart({required int id}) async {
+   emit(RemoveItemLoadingState());
+    final response = await DioHelper()
+        .sendData("client/cart/delete_item/$id",  data: {
+          '_method':'delete'
+    });
+    if (response!.isSuccess) {
+      showMessage(response.message);
+      emit(RemoveItemSuccessState());
+      getCartItems();
+    } else {
+      showMessage(response.message);
+      emit(RemoveItemFailedState());
     }
   }
 }

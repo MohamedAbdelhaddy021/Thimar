@@ -5,10 +5,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thimar/core/logic/cache_helper.dart';
 import 'package:thimar/views/auth/forget_password/cubit.dart';
 import 'package:thimar/views/auth/login/cubit.dart';
+import 'package:thimar/views/auth/logout/cubit.dart';
 import 'package:thimar/views/auth/register/cubit.dart';
 import 'package:thimar/views/auth/reset_password/cubit.dart';
 import 'package:thimar/views/cart/cubit.dart';
+import 'package:thimar/views/category/cubit.dart';
+import 'package:thimar/views/category/view.dart';
+import 'package:thimar/views/complete_order/view.dart';
 import 'package:thimar/views/home/pages/favs/cubit.dart';
+import 'package:thimar/views/home/pages/my_account/pages/about_app/cubit.dart';
+import 'package:thimar/views/home/pages/my_account/pages/about_app/view.dart';
+import 'package:thimar/views/home/pages/my_account/pages/contact_us/cubit.dart';
+import 'package:thimar/views/home/pages/my_account/pages/policy/cubit.dart';
+import 'package:thimar/views/home/pages/my_account/pages/repeated_questions/view.dart';
+import 'package:thimar/views/home/pages/my_orders/view.dart';
 import 'package:thimar/views/splash/view.dart';
 
 import 'core/logic/helper_methods.dart';
@@ -36,6 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+
       providers: [
         BlocProvider(
           create: (context) => LoginCubit(),
@@ -44,10 +55,22 @@ class MyApp extends StatelessWidget {
           create: (context) => CartCubit(),
         ),
         BlocProvider(
-          create: (context) => FavoriteCubit()..getFavorites(),
+          create: (context) => CategoryCubit(),
+        ),
+        BlocProvider(
+          create: (context) => FavoriteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(),
         ),
         BlocProvider(
           create: (context) => OTPCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AboutCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ContactUsCubit(),
         ),
         BlocProvider(
           create: (context) => ForgetPasswordCubit(),
@@ -63,6 +86,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CitiesCubit(),
+        ),
+        BlocProvider(
+          create: (context) => LogoutCubit(),
         ),
         BlocProvider(
           create: (context) => ProductDetailsCubit(),
@@ -99,11 +125,11 @@ class MyApp extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide:
-                      const BorderSide(width: 1, color: Color(0xffF3F3F3))),
+                  const BorderSide(width: 1, color: Color(0xffF3F3F3))),
               disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide:
-                      const BorderSide(width: 1, color: Color(0xffF3F3F3))),
+                  const BorderSide(width: 1, color: Color(0xffF3F3F3))),
               fillColor: Colors.white,
               filled: true,
             ),

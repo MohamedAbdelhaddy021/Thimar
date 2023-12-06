@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/design/app_button.dart';
 
@@ -7,53 +9,80 @@ class MyOrdersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "طلباتي",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            "طلباتي",
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          bottom: TabBar(
+            padding: EdgeInsets.symmetric(horizontal: 16.w,),
+            automaticIndicatorColorAdjustment: true,
+              unselectedLabelColor: Theme.of(context).primaryColor,
+              unselectedLabelStyle:
+                  TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                color: Theme.of(context).primaryColor,
+              ),
+              tabs: [
+                Tab(
+                  child: Text(
+                    "الحاليه",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "المنتهية",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+              ]),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 16, end: 17),
-        child: Column(
+        body: TabBarView(
           children: [
-            Row(
+            Padding(
+            padding:
+                const EdgeInsetsDirectional.only(top: 20, start: 16, end: 17),
+            child: Column(
               children: [
                 Expanded(
-                    child: AppButton(
-                  title: "الحاليه",
-                  onPress: () {},
-                  radius: 10,
-                )),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                    child: AppButton(
-                  title: "المنتهية",
-                  onPress: () {},
-                  color: Colors.grey.withOpacity(.5),
-                )),
-                const SizedBox(
-                  height: 22.5,
-                ),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => _Item(),
+                    itemCount: 4,
+                  ),
+                )
               ],
             ),
-            const SizedBox(
-              height: 22.5,
+          ),
+            Padding(
+            padding:
+                const EdgeInsetsDirectional.only(top: 20, start: 16, end: 17),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => _Item(),
+                    itemCount: 4,
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) => _Item(),
-                itemCount: 4,
-              ),
-            )
+          ),
           ],
         ),
       ),
@@ -68,28 +97,29 @@ class _Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsetsDirectional.only(bottom: 16),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.02),
-              offset: const Offset(0, 6),
-              blurRadius: 17,
-              blurStyle: BlurStyle.outer,
-            )
-          ]),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(15), boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(.02),
+          offset: const Offset(0, 6),
+          blurRadius: 17,
+          blurStyle: BlurStyle.outer,
+        )
+      ]),
       height: 100,
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 4.0,bottom: 4),
+            padding: const EdgeInsets.only(top: 4.0, bottom: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "طلب #4587",
-                  style: TextStyle(color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold, fontSize: 17),
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17),
                 ),
                 const Text(
                   "27,يونيو,2021",
@@ -103,13 +133,13 @@ class _Item extends StatelessWidget {
                   children: [
                     const _ItemYouBuy(
                         img:
-                        "https://img.freepik.com/free-photo/fresh-red-tomatoes_2829-13449.jpg?size=626&ext=jpg&uid=R100743807&ga=GA1.1.699160303.1690903232&semt=sph"),
+                            "https://img.freepik.com/free-photo/fresh-red-tomatoes_2829-13449.jpg?size=626&ext=jpg&uid=R100743807&ga=GA1.1.699160303.1690903232&semt=sph"),
                     const _ItemYouBuy(
                         img:
-                        "https://img.freepik.com/free-vector/isolated-orange-carrot-cartoon_1308-127216.jpg?size=626&ext=jpg&uid=R100743807&ga=GA1.2.699160303.1690903232&semt=sph"),
+                            "https://img.freepik.com/free-vector/isolated-orange-carrot-cartoon_1308-127216.jpg?size=626&ext=jpg&uid=R100743807&ga=GA1.2.699160303.1690903232&semt=sph"),
                     const _ItemYouBuy(
                         img:
-                        "https://img.freepik.com/free-photo/slice-watermelon-white-background_93675-128140.jpg?size=626&ext=jpg&uid=R100743807&ga=GA1.2.699160303.1690903232&semt=sph"),
+                            "https://img.freepik.com/free-photo/slice-watermelon-white-background_93675-128140.jpg?size=626&ext=jpg&uid=R100743807&ga=GA1.2.699160303.1690903232&semt=sph"),
                     Container(
                       height: 30,
                       width: 30,
@@ -118,11 +148,10 @@ class _Item extends StatelessWidget {
                           borderRadius: BorderRadius.circular(7)),
                       child: const Center(
                           child: Text(
-                            "+2",
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        "+2",
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.bold),
+                      )),
                     ),
                     // ItemYouBuy(img: "img"),
                   ],
@@ -132,7 +161,8 @@ class _Item extends StatelessWidget {
           ),
           const Spacer(),
           Padding(
-            padding:  const EdgeInsetsDirectional.only(top: 4.0,bottom: 4,end: 9),
+            padding:
+                const EdgeInsetsDirectional.only(top: 4.0, bottom: 4, end: 9),
             child: Column(
               children: [
                 SizedBox(
@@ -166,8 +196,6 @@ class _Item extends StatelessWidget {
   }
 }
 
-
-
 class _ItemYouBuy extends StatelessWidget {
   const _ItemYouBuy({required this.img});
 
@@ -186,13 +214,12 @@ class _ItemYouBuy extends StatelessWidget {
             border: Border.all(color: Colors.grey.withOpacity(.6))),
         child: Center(
             child: Image.network(
-              img,
-              height: 20,
-              width: 20,
-              fit: BoxFit.scaleDown,
-            )),
+          img,
+          height: 20,
+          width: 20,
+          fit: BoxFit.scaleDown,
+        )),
       ),
     );
   }
 }
-

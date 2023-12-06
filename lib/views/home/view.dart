@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
 
   List<Widget> pages = [
-     const HomePage(),
+      HomePage(),
     const MyOrdersPage(),
     NotificationsPage(),
     const FavoritesPage(),

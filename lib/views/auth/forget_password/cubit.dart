@@ -20,8 +20,10 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
       if (response!.isSuccess) {
         emit(ForgetPassLoadingState());
         navigateTo(
-            OtpCodeView(isActiveAccount: false, phone: phoneController.text),
-            removeHistory: true);
+            OtpCodeView(
+                isActiveAccount: false,
+                phone: phoneController.text),
+            removeHistory: false);
         phoneController.clear();
         emit(ForgetPassSuccessState());
       } else {

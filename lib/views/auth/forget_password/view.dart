@@ -5,6 +5,8 @@ import 'package:thimar/views/auth/forget_password/cubit.dart';
 
 import '../../../core/design/app_button.dart';
 import '../../../core/design/app_input.dart';
+import '../../../core/logic/helper_methods.dart';
+import '../otp_code/view.dart';
 
 class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
@@ -14,6 +16,13 @@ class ForgetPasswordView extends StatefulWidget {
 }
 
 class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,6 +115,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                         ),
                         TextButton(
                             onPressed: () {
+                              cubit.phoneController.clear();
                               Navigator.pop(context);
                             },
                             child: Text(
